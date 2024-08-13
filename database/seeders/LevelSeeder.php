@@ -9,7 +9,7 @@ use LevelUp\Experience\Models\Level;
 class LevelSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      */
     public function run(): void
     {

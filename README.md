@@ -1,4 +1,4 @@
-# Laravel 10 允許使用者通過執行動作來取得經驗值並在等級中逐漸進步
+# Laravel 11 允許使用者通過執行動作來取得經驗值並在等級中逐漸進步
 
 引入 cjmellor 的 level-up 套件來擴增允許使用者通過執行動作來取得經驗值並在等級中逐漸進步，透過等級來肯定並獎勵您的努力。
 
@@ -35,5 +35,5 @@ $ npm run build
 ----
 
 ## 畫面截圖
-![](https://i.imgur.com/glEHwv5.png)
+![](https://i.imgur.com/Yf8z3c3.png)
 > 註冊成功就會取得 10 點經驗值
