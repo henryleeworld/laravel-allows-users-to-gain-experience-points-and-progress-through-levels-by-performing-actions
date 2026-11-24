@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table(config('level-up.user.users_table'), function (Blueprint $table) {
-            $table->foreignId('level_id')
+            $table->entityForeignId('level_id')
                 ->after('remember_token')
                 ->nullable()
-                ->constrained();
+                ->constrained(table: config('level-up.tables.levels'));
         });
     }
 

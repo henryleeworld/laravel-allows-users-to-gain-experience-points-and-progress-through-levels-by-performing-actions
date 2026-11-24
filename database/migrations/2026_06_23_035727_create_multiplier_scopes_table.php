@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create(config('level-up.tables.multiplier_scopes'), function (Blueprint $table) {
+            $table->entityId();
+            $table->entityForeignId('multiplier_id')->constrained(table: config('level-up.tables.multipliers'))->cascadeOnDelete();
+            $table->string('scopeable_type');
+            $table->string('scopeable_id');
+            $table->timestamps();
+
+            $table->unique(['multiplier_id', 'scopeable_type', 'scopeable_id'], 'multiplier_scopes_unique');
+            $table->index(['scopeable_type', 'scopeable_id']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists(config('level-up.tables.multiplier_scopes'));
+    }
+};

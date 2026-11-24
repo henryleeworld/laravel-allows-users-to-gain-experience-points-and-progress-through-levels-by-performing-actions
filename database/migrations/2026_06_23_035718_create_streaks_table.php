@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use LevelUp\Experience\Support\UserForeignKey;
 
 return new class extends Migration
 {
@@ -11,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('streaks', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId(column: config('level-up.user.foreign_key'))->constrained()->onDelete('cascade');
-            $table->foreignId(column: 'activity_id')->constrained('streak_activities')->onDelete('cascade');
+        Schema::create(config('level-up.tables.streaks'), function (Blueprint $table) {
+            $table->entityId();
+            UserForeignKey::on($table)->constrained()->onDelete('cascade');
+            $table->entityForeignId(column: 'activity_id')->constrained(table: config('level-up.tables.streak_activities'))->onDelete('cascade');
             $table->integer(column: 'count')->default(1);
             $table->timestamp(column: 'activity_at');
             $table->timestamps();
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('streaks');
+        Schema::dropIfExists(config('level-up.tables.streaks'));
     }
 };

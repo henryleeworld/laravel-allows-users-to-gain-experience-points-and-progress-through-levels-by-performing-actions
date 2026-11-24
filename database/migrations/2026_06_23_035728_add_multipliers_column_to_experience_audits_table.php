@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('streaks', function (Blueprint $table) {
-            $table->after('activity_at', function (Blueprint $table) {
-                $table->timestamp('frozen_until')->nullable();
-            });
+        Schema::table(config('level-up.tables.experience_audits'), function (Blueprint $table) {
+            $table->json('multipliers')->nullable()->after('reason');
         });
     }
 
@@ -23,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('streaks', function (Blueprint $table) {
-            $table->dropColumn('frozen_until');
+        Schema::table(config('level-up.tables.experience_audits'), function (Blueprint $table) {
+            $table->dropColumn('multipliers');
         });
     }
 };

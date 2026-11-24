@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('streak_activities', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
+        Schema::create(config('level-up.tables.achievements'), function (Blueprint $table) {
+            $table->entityId();
+            $table->string('name');
+            $table->boolean('is_secret')->default(false);
             $table->text('description')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('streak_activities');
+        Schema::dropIfExists(config('level-up.tables.achievements'));
     }
 };

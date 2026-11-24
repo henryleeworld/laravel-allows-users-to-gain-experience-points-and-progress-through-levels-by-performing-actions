@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table(config('level-up.user.users_table'), function (Blueprint $table) {
-            $table->dropConstrainedForeignId('level_id');
+        Schema::table(config('level-up.tables.experiences'), function (Blueprint $table) {
+            $table->entityForeignId('tier_id')->nullable()->constrained(table: config('level-up.tables.tiers'))->nullOnDelete();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table(config('level-up.user.users_table'), function (Blueprint $table) {
-            $table->foreignId('level_id')->nullable()->constrained();
+        Schema::table(config('level-up.tables.experiences'), function (Blueprint $table) {
+            $table->dropConstrainedForeignId('tier_id');
         });
     }
 };

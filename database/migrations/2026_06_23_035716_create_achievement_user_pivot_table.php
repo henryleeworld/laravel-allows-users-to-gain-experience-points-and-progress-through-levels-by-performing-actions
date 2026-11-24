@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use LevelUp\Experience\Support\UserForeignKey;
 
 return new class extends Migration
 {
@@ -11,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('achievement_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId(column: config('level-up.user.foreign_key'))->constrained(config('level-up.user.users_table'));
-            $table->foreignId(column: 'achievement_id')->constrained();
+        Schema::create(config('level-up.tables.achievement_user'), function (Blueprint $table) {
+            $table->entityId();
+            UserForeignKey::on($table)->constrained(config('level-up.user.users_table'));
+            $table->entityForeignId(column: 'achievement_id')->constrained(table: config('level-up.tables.achievements'));
             $table->integer(column: 'progress')->nullable()->index();
             $table->timestamps();
         });
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievement_user');
+        Schema::dropIfExists(config('level-up.tables.achievement_user'));
     }
 };

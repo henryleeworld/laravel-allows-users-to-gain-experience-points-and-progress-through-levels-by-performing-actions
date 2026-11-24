@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('levels', function (Blueprint $table) {
-            $table->id();
-            $table->integer('level')->unique();
-            $table->integer('next_level_experience')->nullable()->index();
+        Schema::create(config('level-up.tables.tiers'), function (Blueprint $table) {
+            $table->entityId();
+            $table->string('name')->unique();
+            $table->unsignedBigInteger('experience')->unique();
+            $table->json('metadata')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists(config('level-up.tables.tiers'));
     }
 };
